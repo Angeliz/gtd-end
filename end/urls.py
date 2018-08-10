@@ -19,7 +19,9 @@ from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
 from rest_framework import permissions
 
-from apiv1.urls import apiv1_urlpatterns
+from users.urls import users_urlpatterns
+from todo.urls import todo_urlpatterns
+from projects.urls import projects_urlpatterns
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -50,4 +52,4 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 ]
 
-urlpatterns = url_docs_patterns + apiv1_urlpatterns + urlpatterns
+urlpatterns = url_docs_patterns + users_urlpatterns + todo_urlpatterns + projects_urlpatterns + urlpatterns

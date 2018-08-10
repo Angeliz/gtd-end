@@ -1,28 +1,15 @@
 from rest_framework import serializers
 
-from apiv1.models import Users
+from users.models import Users
 
 
-class FileSerializer(serializers.ModelSerializer):
+class UsersSerializer(serializers.ModelSerializer):
     class Meta:
         model = Users
         fields = ('user_name', 'user_id', 'user_info')
 
 
-class FileListSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Users
-        fields = ('user_name', 'user_id', 'user_info')
-
-    def to_representation(self, instance):
-        return {
-            'user_id': instance.user_id,
-            'user_name': instance.user_name,
-            'user_info': instance.user_info
-        }
-
-
-class FileRetrieveSerializer(serializers.ModelSerializer):
+class UsersListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Users
         fields = ('user_name', 'user_id', 'user_info')
@@ -35,7 +22,20 @@ class FileRetrieveSerializer(serializers.ModelSerializer):
         }
 
 
-class FileUpdateSerializer(serializers.ModelSerializer):
+class UsersRetrieveSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Users
+        fields = ('user_name', 'user_id', 'user_info')
+
+    def to_representation(self, instance):
+        return {
+            'user_id': instance.user_id,
+            'user_name': instance.user_name,
+            'user_info': instance.user_info
+        }
+
+
+class UsersUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Users
         fields = ('user_name', 'user_password', 'user_info')
@@ -48,7 +48,7 @@ class FileUpdateSerializer(serializers.ModelSerializer):
         return instance
 
 
-class FileCreateSerializer(serializers.ModelSerializer):
+class UsersCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Users
         fields = ('user_name', 'user_password')
