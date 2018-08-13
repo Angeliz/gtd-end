@@ -18,6 +18,7 @@ from django.urls import path, re_path
 from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
 from rest_framework import permissions
+from rest_framework_jwt.views import obtain_jwt_token
 
 from users.urls import users_urlpatterns
 from todo.urls import todo_urlpatterns
@@ -50,6 +51,11 @@ url_docs_patterns = [
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    # 通过用户名密码获取 JWT
+    path('users/obtain_token', obtain_jwt_token)
+    # 通过未过期 JWT 来刷新 JWT。
+    # path('auth/refresh_token/', refresh_jwt_token),
+
 ]
 
 urlpatterns = url_docs_patterns + users_urlpatterns + todo_urlpatterns + projects_urlpatterns + urlpatterns

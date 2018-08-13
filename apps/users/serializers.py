@@ -1,23 +1,24 @@
+from django.contrib.auth import get_user_model
 from rest_framework import serializers
 
-from users.models import Users
-
+# from users.models import Users
+Users = get_user_model()
 
 class UsersSerializer(serializers.ModelSerializer):
     class Meta:
         model = Users
-        fields = ('user_name', 'user_id', 'user_info')
+        fields = ('username', 'id', 'user_info')
 
 
 class UsersListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Users
-        fields = ('user_name', 'user_id', 'user_info')
+        fields = ('username', 'id', 'user_info')
 
     def to_representation(self, instance):
         return {
-            'user_id': instance.user_id,
-            'user_name': instance.user_name,
+            'id': instance.id,
+            'username': instance.username,
             'user_info': instance.user_info
         }
 
@@ -25,12 +26,12 @@ class UsersListSerializer(serializers.ModelSerializer):
 class UsersRetrieveSerializer(serializers.ModelSerializer):
     class Meta:
         model = Users
-        fields = ('user_name', 'user_id', 'user_info')
+        fields = ('username', 'id', 'user_info')
 
     def to_representation(self, instance):
         return {
-            'user_id': instance.user_id,
-            'user_name': instance.user_name,
+            'id': instance.id,
+            'username': instance.username,
             'user_info': instance.user_info
         }
 
@@ -38,11 +39,11 @@ class UsersRetrieveSerializer(serializers.ModelSerializer):
 class UsersUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Users
-        fields = ('user_name', 'user_password', 'user_info')
+        fields = ('username', 'password', 'user_info')
 
     def update(self, instance, validated_data):
-        instance.user_name = validated_data.get('user_name', instance.user_name)
-        instance.user_password = validated_data.get('user_password', instance.user_password)
+        instance.username = validated_data.get('username', instance.username)
+        instance.password = validated_data.get('password', instance.password)
         instance.user_info = validated_data.get('user_info', instance.user_info)
         instance.save()
         return instance
@@ -51,13 +52,16 @@ class UsersUpdateSerializer(serializers.ModelSerializer):
 class UsersCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Users
-        fields = ('user_name', 'user_password')
+        fields = ('username', 'password')
 
     def create(self, validated_data):
-        return Users.objects.create(**validated_data)
+        user = super(UsersCreateSerializer, self).create(validated_data)
+        user.set_password(validated_data['password'])
+        user.save()
+        return user
 
     def to_representation(self, instance):
         return {
-            'user_name': instance.user_name,
-            'user_id': instance.user_id
+            'username': instance.username,
+            'id': instance.id
         }

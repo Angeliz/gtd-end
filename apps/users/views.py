@@ -10,6 +10,9 @@ class UsersViewSet(ModelViewSet):
     # permission_classes = (IsAuthenticated, ModulePermission)
     queryset = Users.objects.order_by('user_id')
 
+    # 先不挂用户验证
+    # authentication_classes = (JSONWebTokenAuthentication, authentication.SessionAuthentication)
+
     def get_serializer_class(self):
         if self.action == 'list':
             return UsersListSerializer
