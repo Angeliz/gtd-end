@@ -8,7 +8,7 @@ from users.serializers import UsersCreateSerializer, UsersUpdateSerializer, User
 
 class UsersViewSet(ModelViewSet):
     # permission_classes = (IsAuthenticated, ModulePermission)
-    queryset = Users.objects.order_by('user_id')
+    queryset = Users.objects.order_by('id')
 
     # 先不挂用户验证
     # authentication_classes = (JSONWebTokenAuthentication, authentication.SessionAuthentication)
