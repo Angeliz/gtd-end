@@ -14,7 +14,7 @@ class Todo(models.Model):
                                help_text='todo的唯一id，pk')
 
     todo_user = models.ForeignKey(Users, on_delete=models.CASCADE)
-    todo_in_project = models.ForeignKey(Projects, on_delete=models.CASCADE, verbose_name='所属项目',
+    todo_in_project = models.ForeignKey(Projects, on_delete=models.SET_NULL, blank=True, null=True, verbose_name='所属项目',
                                         help_text='一个todo所属的项目')
 
     todo_content = models.TextField(verbose_name="内容", help_text="todo的内容")
